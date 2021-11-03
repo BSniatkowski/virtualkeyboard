@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: large;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: antiquewhite;
+    height: 100vh;
+}
+
+.keyboard-container {
+    position: relative;
+    width: 50%;
+    padding: 1rem;
+    background-color: rgb(197, 197, 197);
+    border: .2rem solid black;
+    border-radius: .5rem;
+    min-width: 600px;
+    max-width: 1000px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.row button {
+    --size: 3rem;
+    height: var(--size);
+    width: var(--size);
+    font-weight: bolder;
+    border: .1rem solid black;
+    border-radius: .2rem;
+    margin: .1rem;
+}
+
+.row button:active {
+    filter: brightness(.9);
+}
+
+.row .caps, .row .shift, .row .backspace, .row .alt{
+    width: calc(2 * var(--size));
+}
+
+.row .space {
+    width: 50%;
+}
+
+.row:nth-child(3) {
+    margin-left: 11%;
+}
+
+.screen {
+    position: absolute;
+    width: 100%;
+    height: 4rem;
+    background-color: black;
+    top: -50%;
+    left: 0;
+    color: white;
+}
+
+.text-container {
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    min-height: 1.1rem;
+    transform: translateY(-50%);
+    font-size: larger;
+    font-family: monospace;
+}
+
+.text-container::after {
+    content: '';
+    position: absolute;
+    display: block;
+    right: 0;
+    bottom: 0;
+    transform: translateX(100%);
+    width: .6rem;
+    border-bottom: .2rem solid white;
+    animation-name: disappear;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes disappear {
+
+    0% {filter: opacity(0);}
+    49% {filter: opacity(0);}
+    50% {filter: opacity(1);}
+    99% {filter: opacity(1);}
+    100% {filter: opacity(0);}
+}
