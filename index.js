@@ -12,85 +12,30 @@ let caps = document.querySelector("button.caps");
 
 let space = document.querySelector("button.space");
 
+class charContainer {
+
+    constructor(BUTTON) {
+
+        this.char = BUTTON.innerText;
+        this.shiftedChar = BUTTON.getAttribute("shifted-char");
+        this.altChar = BUTTON.getAttribute("alt-char");
+        this.altShiftedChar = BUTTON.getAttribute("alt-shifted-char");
+    }
+};
+
+var charContainers = [];
+
+for(let i = 0; i < charButtons.length; i++) {
+    charContainers[i] = new charContainer(charButtons[i]);
+}
+
+console.log(charContainers);
+
+space.addEventListener('click', () => {text.innerText += '\xa0'});
+
 backspace.addEventListener('click', () => {
 
     if(text.innerText != "" || text.innerText != null) {
         text.innerText = text.innerText.slice(0, text.innerText.length - 1);
     }
-})
-
-charButtons.forEach(btn => {
-    btn.addEventListener('click', function() {
-        text.innerText += this.innerText;
-        if(caps.getAttribute("caps") == "false" && charButtons[13].innerText == "Q") {
-        shifted();
-        }
-        if(caps.getAttribute("caps") == "true" && charButtons[13].innerText == "q") {
-            shifted();
-        }
-    })
-});
-
-const shifted = () => {
-    charButtons.forEach(btn => {
-        let shiftedChar = btn.getAttribute("shifted-char");
-        btn.setAttribute("shifted-char",btn.innerText);
-        btn.innerText = shiftedChar;
-    })
-};
-
-shift.addEventListener('click', () => {
-    shifted();
-});
-
-space.addEventListener('click', () => {text.innerText += '\xa0'});
-
-caps.addEventListener('click', function () {
-    shifted();
-    if(caps.getAttribute("caps") == "false") {
-        caps.setAttribute("caps","true")
-    } else {
-        caps.setAttribute("caps","false")
-    }
-});
-
-alt.forEach((btn) => {
-btn.addEventListener('click', function () {
-    if(alt[0].getAttribute("alt") == "false") {
-        
-        alt[0].setAttribute("alt", "true");
-        
-        charButtons.forEach(btn => {
-            console.log(btn.hasAttribute("alt-char"))
-            if(btn.hasAttribute("alt-char")) {
-
-            let char;
-
-            char = btn.getAttribute("alt-char");
-            btn.setAttribute("alt-char", btn.innerText)
-            btn.innerText = char;
-
-            }
-            
-        })
-
-    } else {
-        alt[0].setAttribute("alt", "false");
-
-        charButtons.forEach(btn => {
-            
-            if(btn.hasAttribute("alt-char")) {
-
-            let char;
-
-            char = btn.getAttribute("alt-char");
-            btn.setAttribute("alt-char", btn.innerText)
-            btn.innerText = char;
-
-            }
-            
-        })
-
-    }
-})
 });
