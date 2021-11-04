@@ -54,3 +54,43 @@ caps.addEventListener('click', function () {
     }
 });
 
+alt.forEach((btn) => {
+btn.addEventListener('click', function () {
+    if(alt[0].getAttribute("alt") == "false") {
+        
+        alt[0].setAttribute("alt", "true");
+        
+        charButtons.forEach(btn => {
+            console.log(btn.hasAttribute("alt-char"))
+            if(btn.hasAttribute("alt-char")) {
+
+            let char;
+
+            char = btn.getAttribute("alt-char");
+            btn.setAttribute("alt-char", btn.innerText)
+            btn.innerText = char;
+
+            }
+            
+        })
+
+    } else {
+        alt[0].setAttribute("alt", "false");
+
+        charButtons.forEach(btn => {
+            
+            if(btn.hasAttribute("alt-char")) {
+
+            let char;
+
+            char = btn.getAttribute("alt-char");
+            btn.setAttribute("alt-char", btn.innerText)
+            btn.innerText = char;
+
+            }
+            
+        })
+
+    }
+})
+});
