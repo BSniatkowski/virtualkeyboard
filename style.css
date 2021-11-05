@@ -98,3 +98,7 @@ body {
     99% {filter: opacity(1);}
     100% {filter: opacity(0);}
 }
+
+.clicked {
+    background-color: rgb(77, 77, 77);
+}

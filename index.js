@@ -12,6 +12,10 @@ let caps = document.querySelector("button.caps");
 
 let space = document.querySelector("button.space");
 
+var capsBool = false;
+var shiftBool = false;
+var altBool = false;
+
 class charContainer {
 
     constructor(BUTTON) {
@@ -20,6 +24,7 @@ class charContainer {
         this.shiftedChar = BUTTON.getAttribute("shifted-char");
         this.altChar = BUTTON.getAttribute("alt-char");
         this.altShiftedChar = BUTTON.getAttribute("alt-shifted-char");
+
     }
 };
 
@@ -29,7 +34,89 @@ for(let i = 0; i < charButtons.length; i++) {
     charContainers[i] = new charContainer(charButtons[i]);
 }
 
-console.log(charContainers);
+const lowOrHigh = () => {
+
+    switch((!(shiftBool == capsBool) && (shiftBool != capsBool))) {
+
+        case true: {
+
+            for(let i = 0; i < charButtons.length; i++) {
+
+                charButtons[i].innerText = charContainers[i].shiftedChar;
+
+            }
+
+            break;
+        }
+
+        case false: {
+
+            for(let i = 0; i < charButtons.length; i++) {
+
+                charButtons[i].innerText = charContainers[i].char;
+
+            }
+
+            break;
+        }
+
+    }
+
+}
+
+const altOrNorm = () => {
+
+    switch(altBool) {
+
+        case true: {
+
+            if((!(shiftBool == capsBool) && (shiftBool != capsBool))) {
+
+                for(let i = 0; i < charButtons.length; i++) {
+
+                    charButtons[i].innerText = charContainers[i].altShiftedChar;
+    
+                }
+
+            } else {
+
+                for(let i = 0; i < charButtons.length; i++) {
+
+                    charButtons[i].innerText = charContainers[i].altChar;
+    
+                }
+
+            }
+
+            break;
+        }
+
+        case false: {
+
+            if((!(shiftBool == capsBool) && (shiftBool != capsBool))) {
+
+                for(let i = 0; i < charButtons.length; i++) {
+
+                    charButtons[i].innerText = charContainers[i].shiftedChar;
+    
+                }
+
+            } else {
+
+                for(let i = 0; i < charButtons.length; i++) {
+
+                    charButtons[i].innerText = charContainers[i].char;
+    
+                }
+
+            }
+
+            break;
+        }
+
+    }
+
+}
 
 space.addEventListener('click', () => {text.innerText += '\xa0'});
 
@@ -40,84 +127,81 @@ backspace.addEventListener('click', () => {
     }
 });
 
-var checkChars = () => {
-    console.log(shift.getAttribute("shift") == "true" && caps.getAttribute("caps") == "true" && alt[0].getAttribute("alt") == "true");
-    if(caps.getAttribute("caps") == "true" && shift.getAttribute("shift") == "true" && alt[0].getAttribute("alt") == "true") {
-        
-        for(var i = 0; i < charButtons.length; i++) {
-            charButtons[i].innerText = charContainers[i].altChar;
-        }
+caps.addEventListener('click', () => {
 
-    } else if (shift.getAttribute("shift") == "false" && caps.getAttribute("caps") == "true" && alt[0].getAttribute("alt") == "true") {
+    if(capsBool) {
 
-        for(var i = 0; i < charButtons.length; i++) {
-            charButtons[i].innerText = charContainers[i].altShiftedChar;
-        }
-
-    } else if (shift.getAttribute("shift") == "false" && caps.getAttribute("caps") == "true" && alt[0].getAttribute("alt") == "true") {
-        
-    }
-};
-
-shift.addEventListener('click', () => {
-
-    if(shift.getAttribute("shift") == "false") {
-
-        shift.setAttribute("shift","true");
+        capsBool = false;
 
     } else {
 
-        shift.setAttribute("shift", "false");
+        capsBool = true;
 
     }
 
+    lowOrHigh();
 
+    altOrNorm();
+
+})
+
+
+shift.addEventListener('click', () => {
+
+    if(shiftBool) {
+
+        shiftBool = false;
+
+    } else {
+
+        shiftBool = true;
+
+    }
+
+    lowOrHigh();
+
+    altOrNorm();
 
 })
 
 alt.forEach(btn => {
     btn.addEventListener('click', function () {
 
-    if(alt[0].getAttribute("alt") == "false") {
+    if(altBool) {
 
-        alt[0].setAttribute("alt","true");
+        altBool = false;
 
     } else {
 
-        alt[0].setAttribute("alt", "false");
+        altBool = true;
 
     }
 
-    })
+    altOrNorm();
 
-
+    }) 
 
 });
 
-caps.addEventListener('click', () => {
-
-    if(caps.getAttribute("caps") == "false") {
-
-        caps.setAttribute("caps","true");
-
-    } else {
-
-        caps.setAttribute("caps", "false");
-
-    }
-
-    checkChars();
-
-})
-
 charButtons.forEach(btn => {
     btn.addEventListener('click', function() {
+
         text.innerText += this.innerText;
-        if(shift.getAttribute("shift") == "true") {
-            shift.setAttribute("shift", "false");
+
+        if(shiftBool) {
+
+            shiftBool = false;
+
         }
-        if(alt[0].getAttribute("alt") == "true") {
-            alt[0].setAttribute("alt", "false");
+        if(altBool) {
+
+            altBool = false;
+
         }
+
+        lowOrHigh();
+
+        altOrNorm();
+
     })
 })
